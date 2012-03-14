@@ -1,0 +1,117 @@
+
+
+Fresh Installation:
+
+
+
+Fresh installation:
+------------------
+1: Remove any other drivers for the Broadcom wireless device.
+
+There are several other drivers (besides this one) that can drive 
+Broadcom 802.11 chips such as b43, bcma and ssb. They will conflict with 
+this driver and need to be uninstalled before this driver can be installed.
+Any previous revisions of the wl driver also need to be removed.
+
+Note: On some systems such as Ubuntu 9.10, the ssb module may load during
+boot even though it is blacklisted (see note under Common Issues on how to
+resolve this. Nevertheless, ssb still must be removed
+(by hand or script) before wl is loaded. The wl driver will not function 
+properly if ssb the module is loaded.
+
+# lsmod  | grep "b43\|ssb\|bcma\|wl"
+
+If any of these are installed, remove them:
+# rmmod b43
+# rmmod ssb
+# rmmod bcma
+# rmmod wl
+
+To blacklist these drivers and prevent them from loading in the future:
+# echo "blacklist ssb" >> /etc/modprobe.d/blacklist.conf
+# echo "blacklist bcma" >> /etc/modprobe.d/blacklist.conf
+# echo "blacklist b43" >> /etc/modprobe.d/blacklist.conf
+
+2: Insmod the driver.
+
+Otherwise, if you have not previously installed a wl driver, you'll need
+to add a security module before using the wl module.  Most newer systems 
+use lib80211 while others use ieee80211_crypt_tkip. See which one works for 
+your system.
+
+# modprobe lib80211 
+  or 
+# modprobe ieee80211_crypt_tkip
+
+If your using the cfg80211 version of the driver, then cfg80211 needs to be
+loaded:
+
+# modprobe cfg80211
+
+Then:
+# insmod wl.ko
+
+wl.ko is now operational.  It may take several seconds for the Network 
+Manager to notice a new network driver has been installed and show the
+surrounding wireless networks.
+
+If there was an error, see Common issues below.
+
+Common issues:
+----------------
+* After the insmod you may see this message:
+  WARNING: modpost: missing MODULE_LICENSE()
+  It is expected, not harmful and can be ignored.
+
+* If you see this message:
+
+  "insmod: error inserting 'wl.ko': -1 Unknown symbol in module"
+
+  Usually this means that one of the required modules (as mentioned above) is
+  not loaded. Try this:
+  # modprobe lib80211 or ieee80211_crypt_tkip (depending on your os)
+  # modprobe cfg80211
+    
+  Now re-try to insmod the wl driver:
+  # insmod wl.ko
+  
+* If the wl driver loads but doesn't seem to do anything:
+  the ssb module may be the cause.  Sometimes blacklisting ssb may not
+  be enough to prevent it from loading and it loads anyway. (This is mostly
+  seen on Ubuntu/Debian systems).
+
+  Check to see if ssb, bcma, wl or b43 is loaded:
+  # lsmod | grep "ssb\|wl\|b43\|bcma"
+
+  If any of these are installed, remove them:
+  # rmmod ssb
+  # rmmod bcma
+  # rmmod wl
+  # insmod wl
+
+  Back up the current boot ramfs and generate a new one:
+  # cp /boot/initrd.img-`uname -r` somewheresafe
+  # update-initramfs -u
+  # reboot
+
+3: Setup to always load at boot time.
+
+The procedure to make a module load at boot time varies from distro to
+distro.  Consult the docs for your specific distro to see how.  The 
+following seems to work for my setup on Fedora and Ubuntu.  Check your 
+docs to see the procedure for your distro.
+
+Follow these steps to have the driver load as part of the boot process:
+
+# load driver as described above
+# cp wl.ko /lib/modules/`uname -r`/kernel/drivers/net/wireless 
+# depmod -a
+
+# echo modeprobe wl >> /etc/rc.local  (Fedora/SUSE)
+
+Ubuntu ships a version of wl.ko, so those need to be disabled.  On my 
+system the were several versions, so I searched and renamed the .ko's
+like this:
+
+# sh: for i in `find /lib /var -name wl\.ko`; do mv $i ${i}.orig; done
+
