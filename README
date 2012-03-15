@@ -1,0 +1,48 @@
+tODAYS WORK
+
+
+
+1.GitHub is an open source version control system (VCS) called Git*. Download and install Git with synaptic    package manager.
+                 System ---> Administration  --> Synaptic Package Manager
+
+  Create account on www.github.com
+2.Create the ssh key pairs if you dont have already
+   If you have then take their backup and remove them.
+    $ls
+    $ mkdir keybackup
+    $ cp id_rsa* keybackup
+    $ rm id_rsa*
+  Now create new keys as below.
+    $ ssh -keygen -t rsa -c 'your emailid'
+  Now give the file name to store keys.
+    /home/causecode-1/.ssh/id_rsa
+  now enter passphrase
+  again enter passphrase
+  Keys are automatically generated and stored in given file.
+3.Link These keys to your account.
+  Open given file.
+  Copy Key as it is.
+  Open a/c on github.com
+  Go to Account settings  ---> SSh keys  ---> add ssh key ---> apply
+4.Check connection using 
+  $ ssh -t git@github.com
+5.Now add your name and email to github 
+ $ git config  --global user.name "lahu kolte"
+ $ git config  --global user.mail "lahu.kolte@causecode.com" 
+6.Now create a repository in your github account. 
+   Create readme file for your repository
+    TYpe as follows:
+     $mkdir html5
+    $ cd html5
+   $ git init 
+   $ touch Readme
+ Now open readme file and type something save and close the file.
+ Now add the file 
+ $ git add readme.txt
+Now commit the task which is snapshot of all the files at that point of time
+ $ git commit -m 'first commit'
+Whatever we have done uptil now is on local clone of the file means on client side 
+so we have to push commited data on github account
+ $ git remote add origin git@github.com:lahucausecode/html5.git  //this will Set the origin for the Html5repo
+    $ git push -u origin master
+
