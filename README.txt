@@ -116,7 +116,7 @@ To check to see if you have this directory do this:
 
 BUILD INSTRUCTIONS
 ------------------
-1. Setup the directory by untarring the proper tarball:
+1. Setup the directory by untarring the proper tarball:-
 
 For 32 bit: 	hybrid-portsrc.tar.gz
 For 64 bit: 	hybrid-portsrc-x86_64.tar.gz
