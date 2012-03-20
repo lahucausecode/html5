@@ -1,0 +1,24 @@
+
+#navbar
+   {
+     border: 3px solid 0000;
+     margin-left:30px;
+     margin-top:30px;
+     margin-bottom:30px;
+     padding:2px;
+     float:left;
+     width:170px;
+   }
+
+
+#tabbar
+   {
+     border: 3px solid 0000;
+     margin-left:400px;
+     margin-top:50px;
+     margin-bottom:30px;
+     padding:2px;
+   }
+
+
+h1{color:8956}

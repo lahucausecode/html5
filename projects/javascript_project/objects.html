@@ -1,0 +1,41 @@
+<html>
+
+ <head>
+  <link rel = "stylesheet" type="text/css" href= "objects.css"></link>
+  <script src = "objects.js" type ="text/javascript"></script>
+  <title>My JavaScript Project</title>
+ </head>
+
+ <body bgcolor=white>
+
+  <h1>Object Creation And Deletion Using JavaScript</h1>
+
+  <div id = "navbar">
+   <h3>Enter Your Data Below:</h3>
+   <form method = "post" action = "objects.js">
+     <p>First Name:<input type = "text" value = "Enter Your First Name Here" id = "firstname"></input></p>
+     <p>Last Name :<input type = "text" value = "Enter Your Last Name Here" id = "lastname"></input></p>
+     <p>Email     :<input type = "text" value = "Enter Your E-mail id Here" id = "email"></input></p>
+     <p>Phone No  :<input type = "text" value = "Enter Your Phone No Here" id = "phone"></input></p>
+     <p>Website   :<input type = "text" value = "Enter Your Website Here" id = "website"></input></p>
+     <p><input type ="button" onclick="addRow('dataTable')" name= "data"  value = "Add data"></input></p>
+   </form>
+  </div>
+
+  <div id = "tabbar">
+   <h2>Details:</h2>
+   <table id = "dataTable" width = "900px" border = "1">
+    <tr>
+     <td width = "130px">First Name</td>
+     <td width = "130px">Last Name</td>      
+     <td width = "130px">Email</td>      
+     <td width = "130px">Phone No</td>
+     <td width = "130px">Website</td>
+     <td width = "100px">Delete optn</td>
+     <td width = "100px">Edit optn</td>                  
+    </tr>
+   </table>
+  </div>
+
+ </body>
+</html>

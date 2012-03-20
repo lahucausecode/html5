@@ -1,0 +1,16 @@
+body{background-color:orange;}
+
+#content
+{ padding:1px;
+  border:1px solid 0000f;
+  width:70%;
+  height:100%;
+  margin-left:auto;
+  margin-right:auto;
+  background-color:yellow;
+  
+}
+
+p{text-align:right;
+ margin-top:100px;
+   color:00ff;}
