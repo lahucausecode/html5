@@ -12,13 +12,13 @@
 
   <div id = "navbar">
    <h3>Enter Your Data Below:</h3>
-   <form method = "post" action = "objects.js">
+   <form method = "post" action = "objects.js" id = "dataForm">
      <p>First Name:<input type = "text" value = "Enter Your First Name Here" id = "firstname"></input></p>
      <p>Last Name :<input type = "text" value = "Enter Your Last Name Here" id = "lastname"></input></p>
-     <p>Email     :<input type = "text" value = "Enter Your E-mail id Here" id = "email"></input></p>
+     <p>Email     :<input type = "text" value = "Enter Your E-mail id Here" id = "email" required placeholder="Enter a valid   email address"></input></p>
      <p>Phone No  :<input type = "text" value = "Enter Your Phone No Here" id = "phone"></input></p>
      <p>Website   :<input type = "text" value = "Enter Your Website Here" id = "website"></input></p>
-     <p><input type ="button" onclick="addRow('dataTable');alert(this);" name= "data"  value = "Add data"></input></p>
+     <p><input type ="button" onclick="validate('dataTable')" id= "data"  value = "Add data"></input></p>
    </form>
   </div>
 

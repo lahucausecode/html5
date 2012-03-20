@@ -1,0 +1,59 @@
+<html>
+<body>
+
+<script type="text/javascript">
+
+
+//for email
+function validateForm_email()
+{
+var x=document.forms["myForm"]["email"].value;
+var atpos=x.indexOf("@");
+var dotpos=x.lastIndexOf(".");
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+{
+alert("Not a valid e-mail address");
+return false;
+}
+}
+
+
+//for name and last name
+function validateForm_name(form)
+{
+var x = form.lastname.value;
+x = x.replace(/^\s+|\s+$/g,""); // strip all leading and trailing spaces
+x = x.replace(/\s{2,}/g," "); // replace multiple spaces with one space
+if (x.length < 2) {
+alert("Last name must be filled out");
+return false;
+}
+if (/[^a-z\s\-\']/gi.test (x)) { // only letters space hyphen apostophe allowed - Smith-Jones O'Flanaghan
+alert ("You may only enter letters, space, hyphen, apostrophe in the last name field");
+return false;
+}
+return true;
+}
+
+
+//for web addr
+
+function is_valid_url(url)
+{
+return url.match(/^(ht|f)tps?:\/\/[a-z0-9-\.]+\.[a-z]{2,4}\/?([^\s<>\#%"\,\{\}\\|\\\^\[\]`]+)?$/);
+}
+
+
+//for usa ph #
+function validatePhoneNumber(elementValue)
+{
+var phoneNumberPattern = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+return phoneNumberPattern.test(elementValue);
+}
+
+
+
+</script>
+
+</body>
+</html>

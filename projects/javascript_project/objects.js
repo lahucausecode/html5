@@ -1,6 +1,19 @@
 var userList = new Array();
 var count = userList.length;
 
+function validate(tableId)
+{
+   alert("in validate");
+   var formObject = document.forms['dataForm'];
+   var firstNameElement = formObject.elements[0];
+   var lastNameElement = formObject.elements[1];
+   var emailElement = formObject.elements[2];
+   var phoneNoElement = formObject.elements[3];
+   var websiteElement = formObject.elements[4];
+
+
+   addRow(tableId);
+}//validate
 
 
 
@@ -11,15 +24,60 @@ function findParentNode(parentName, childObj) {
         testObj = testObj.parentNode;
     }**/
     alert('Finally found ');
-}
+}//findParentNode
 
-
+function save(i,tableId)
+{
+   var firstName=document.getElementById("firstname");
+   var lastName=document.getElementById("lastname");
+   var email=document.getElementById("email");
+   var phoneNo=document.getElementById("phone");
+   var website=document.getElementById("website");
+   
+   var formObject = document.forms['dataForm'];
+   var button =formObject.elements[5];
+   button.value = "Add data";    
+   //butoon.onclick = function () {validate(tableId); return false;};   
+   userList[i] = {
+             "fName":firstName.value,
+             "lName":lastName.value,
+           "emailId":email.value,
+               "phn":phone.value,
+               "web":website.value
+                    };
+   alert("Data Saved");
+   
+   refreshTable(tableId); 
+}//save
 
 
 
 function editObject(email,tableId)
 {
-   alert(email.value);
+   var formObject = document.forms['dataForm'];
+   var firstNameElement = formObject.elements[0];
+   var lastNameElement = formObject.elements[1];
+   var emailElement = formObject.elements[2];
+   var phoneNoElement = formObject.elements[3];
+   var websiteElement = formObject.elements[4];
+   var buttonElement = formObject.elements[5];	
+   buttonElement.value = "Save";
+   
+   for(var i = 0;i<userList.length;i++)
+    {
+      if(userList[i].emailId===email)
+        {
+         alert("In Edit:MR./Ms."+" "+userList[i].fName +" "+userList[i].lName);
+         firstNameElement.value = userList[i].fName;
+         lastNameElement.value = userList[i].lName;
+         emailElement.value = userList[i].emailId;
+         phoneNoElement.value = userList[i].phn;
+         websiteElement.value = userList[i].web;
+         break;
+        }
+    }
+  buttonElement.onclick = function () { save(i,tableId); return false;};     
+ 
 }//editObject
 
 
@@ -31,15 +89,16 @@ function refreshTable(tableId)
 {
 
    var table = document.getElementById(tableId);
+  
    var lastRow = table.rows.length;
-   while (table.rows.length> 0) 
+   while (lastRow > 1) 
       {
-        if(lastRow>1)
-         table.deleteRow(lastRow-1);
+        table.deleteRow(lastRow-1);
+        lastRow--;
       }
 
-   var table = document.getElementById(tableId);
-    
+   alert("Refreshing...");
+   
    for(var i=0;i<userList.length;i++)
    {
       var rowCount = table.rows.length;
@@ -59,24 +118,21 @@ function refreshTable(tableId)
             
       var cell5 = row.insertCell(4);
       cell5.innerHTML = userList[i].web;  
-
+      
+      var mail = userList[userList.length-1].emailId;
       var cell6 = row.insertCell(5);
       var deleteButton =document.createElement("button");
       deleteButton.innerHTML = "Delete";
-      var mail = userList[userList.length].emailId;
-      deleteButton.onclick = function() {deleteObject(mail,tableId); return false; }
+      deleteButton.onclick = function() {deleteObject(mail,tableId);}
       cell6.appendChild(deleteButton);
 
 
       var cell7 = row.insertCell(6);
       var editButton =document.createElement("button");
       editButton.innerHTML = "Edit";
-      editButton.onclick = function() {editObject(mail,tableId); return false; }
+      editButton.onclick = function() {editObject(mail,tableId);}
       cell7.appendChild(editButton);
-
-      
-   }
-
+  }
 }
 
 
@@ -87,11 +143,9 @@ function deleteObject(email,tableId)
 {
    for(var i = 0;i<userList.length;i++)
     {
-      var val = userList[i].emailId.value;
-      if(val===email)
+      if(userList[i].emailId===email)
         {
-         alert("Emails are: " + val + "  "+ email);
-         alert("Data Deleted:");
+         alert("Data Deleted:MR./Ms."+" "+userList[i].fName +" "+userList[i].lName);
          userList.splice(i,1);
          count--;
          refreshTable(tableId);
@@ -125,21 +179,17 @@ function createTable(tableId)
    var cell5 = row.insertCell(4);
    cell5.innerHTML = userList[count].web;  
 
+   var mail = userList[userList.length-1].emailId;
    var cell6 = row.insertCell(5);
    var deleteButton =document.createElement("button");
    deleteButton.innerHTML = "Delete";
+   deleteButton.onclick = function() {deleteObject(mail,tableId);}
    cell6.appendChild(deleteButton);
-   /**deleteButton.onclick = function(e) {
-	findParentNode('row',this)
-   };**/
-   var mail = userList[userList.length-1].emailId.value;
-   deleteButton.onclick = function() {deleteObject(mail,tableId); return false; }
-  
-
+   
    var cell7 = row.insertCell(6);
    var editButton =document.createElement("button");
    editButton.innerHTML = "Edit";
-   editButton.onclick = function() {editObject(mail,tableId); return false; }
+   editButton.onclick = function() {editObject(mail,tableId);}
    cell7.appendChild(editButton);
 
    count++;
